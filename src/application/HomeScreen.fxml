@@ -17,5 +17,7 @@
             <Font size="25.0" />
          </font>
       </Label>
+      <Label fx:id="homeErrorText" layoutX="21.0" layoutY="369.0" text="Error Text" textFill="RED" />
+      <Button layoutX="247.0" layoutY="148.0" mnemonicParsing="false" onAction="#createEffortLog" text="Create Effort Log" />
    </children>
 </AnchorPane>

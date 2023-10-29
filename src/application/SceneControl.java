@@ -1,19 +1,48 @@
 package application;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
+import javafx.fxml.*;
+import java.util.*;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class SceneControl {
+public class SceneControl implements Initializable{
 	private Stage stage;
 	private Scene scene;
 	private Parent root;
 	
+	//custom variables
+	List<EffortLog> logs = new ArrayList<EffortLog>();
+	//ObservableList<EffortLog> observeLogs = FXCollections.observableArrayList(logs);
+	
+	//Variables in the program (fx:id)
+	@FXML
+	private Label homeErrorText;
+	@FXML
+	private Label elErrorText;
+	@FXML
+	private ChoiceBox elEditorChoices = new ChoiceBox();// = new ChoiceBox<EffortLog>(FXCollections.observableArrayList(logs));
+	@FXML
+	private TextField elEditLogName;
+	@FXML
+	private TextField elEditEffortValue;
+	
+	//Methods below handle switching between scenes
 	public void ChangeToHomePage(ActionEvent event) throws IOException {
 		root = FXMLLoader.load(getClass().getResource("HomeScreen.fxml"));
 		stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
@@ -60,5 +89,67 @@ public class SceneControl {
 		scene = new Scene(root);
 		stage.setScene(scene);
 		stage.show();
+	}
+	
+	
+	//method creates a new EffortLog and adds it to the ArrayList
+	//TODO: change so future variables (date, defects, etc.) can be placed in new logs
+	//also TODO: change this so it correctly updates the array and choicebox
+	public void createEffortLog() {
+		EffortLog e = new EffortLog();
+		logs.add(e);
+		elEditorChoices.getItems().addAll(logs);
+		//elEditorChoices = new ChoiceBox<EffortLog>(FXCollections.observableArrayList(logs));
+		//elEditorChoices.setItems((ObservableList<EffortLog>) logs);
+	}
+	
+	//made by Kevin Nomura
+	//saves edits made to an Effort Log's name and effort value
+	//checked for validity with a scanner
+	public void saveEditsToEffortLog(ActionEvent event) {
+		//check Edit Name field
+		String editedName = elEditLogName.getText();
+		//checks if new name is proper length (1-20 characters)
+		if (editedName.length() < 1 || editedName.length() > 20) {
+			elErrorText.setText("ERROR: invalid name length (must be 1-20 characters)");
+			return;
+		} else {
+			System.out.println("name check success!");
+		}
+		
+		//check Edit Effort Value field
+		String editedEffortValue = elEditEffortValue.getText();
+		Scanner intChecker = new Scanner(editedEffortValue);
+		//checks if new effort value is an int
+		if (intChecker.hasNextInt()) {
+			int newEffortVal = intChecker.nextInt();
+			//checks if new effort value is between 1-10
+			if (newEffortVal < 1 || newEffortVal > 10) {
+				elErrorText.setText("ERROR: invalid effort value (must be number 1-10)");
+				intChecker.close();
+				return;
+			//if both tests pass, save name and effort value
+			} else {
+				System.out.println("value check success!");
+				System.out.println("both checks passed, saving values");
+			}
+		} else {
+			elErrorText.setText("ERROR: effort value must be an integer between 1-10");
+			intChecker.close();
+			return;
+		}
+		intChecker.close();
+	}
+
+	//TODO: fix this method so it correctly adds our logs arraylist
+	@Override
+	public void initialize(URL arg0, ResourceBundle arg1) {
+		/*List<EffortLog> list = new ArrayList<EffortLog>();
+		EffortLog e = new EffortLog();
+		list.add(e);*/ //ignore these, just made for testing
+		ObservableList obList = FXCollections.observableArrayList(logs);
+		elEditorChoices.getItems().clear();
+		elEditorChoices.setItems(obList);
+		
 	}
 }
