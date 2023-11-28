@@ -13,5 +13,15 @@
             <Font size="25.0" />
          </font>
       </Label>
+      <Button layoutX="168.0" layoutY="111.0" mnemonicParsing="false" onAction="#avg1" text="Calculate Avg 1" />
+      <Label fx:id="ppAverageText" layoutX="506.0" layoutY="289.0" text="0" textFill="#0fb400">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="471.0" layoutY="256.0" text="Your average is:" />
+      <Label fx:id="ppErrorText" layoutX="14.0" layoutY="364.0" text="Error Text" textFill="RED" />
+      <Button layoutX="334.0" layoutY="111.0" mnemonicParsing="false" onAction="#avg2" text="Calculate Avg 2" />
+      <Button layoutX="251.0" layoutY="187.0" mnemonicParsing="false" onAction="#avg3" text="Calculate Avg 3" />
    </children>
 </AnchorPane>

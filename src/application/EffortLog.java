@@ -5,12 +5,22 @@ public class EffortLog {
 	private int effortValue; //USED FOR PLANNING POKER
 	private int indexValue; //this log's index
 	static int index = 1; //index of all effort logs
+	private int weight; //weight for planning poker calculations
 	//TODO: add more values required for effortlogger (dates, duration, defects, etc.)
 	
-	EffortLog() {
+	public EffortLog() {
 		this.indexValue = index;
 		this.name = ("EffortLog " + indexValue);
 		this.effortValue = 5; //default value for effort value
+		this.weight = 2; //default value for weight
+		index++;
+	}
+	
+	public EffortLog(int effortValue, int weight) {
+		this.indexValue = index;
+		this.name = ("EffortLog " + indexValue);
+		this.effortValue = effortValue;
+		this.weight = weight;
 		index++;
 	}
 	
@@ -45,6 +55,14 @@ public class EffortLog {
 
 	public static void setIndex(int index) {
 		EffortLog.index = index;
+	}
+	
+	public int getWeight() {
+		return weight;
+	}
+	
+	public void setWeight(int weight) {
+		this.weight = weight;
 	}
 	
 	//custom methods
