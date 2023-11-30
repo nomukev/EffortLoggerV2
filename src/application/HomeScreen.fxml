@@ -19,5 +19,6 @@
       </Label>
       <Label fx:id="homeErrorText" layoutX="21.0" layoutY="369.0" text="Error Text" textFill="RED" />
       <Button layoutX="247.0" layoutY="148.0" mnemonicParsing="false" onAction="#createEffortLog" text="Create Effort Log" />
+      <Button layoutX="265.0" layoutY="248.0" mnemonicParsing="false" onAction="#printLogs" text="Print Logs" />
    </children>
 </AnchorPane>
