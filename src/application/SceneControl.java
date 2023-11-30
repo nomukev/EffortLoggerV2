@@ -101,6 +101,7 @@ public class SceneControl implements Initializable{
 	//also TODO: change this so it correctly updates the array and choicebox
 	public void createEffortLog() {
 		EffortLog e = new EffortLog();
+		System.out.println("Effort log " + e.toString() + " created!");
 		logs.add(e);
 		elEditorChoices.getItems().addAll(logs);
 		//elEditorChoices = new ChoiceBox<EffortLog>(FXCollections.observableArrayList(logs));
@@ -187,6 +188,8 @@ public class SceneControl implements Initializable{
 	
 	//CALCULATION METHOD
 	public int calculateAverage(List<EffortLog> calcLogs) {
+		System.out.println("The following logs were used in this calculation:");
+		printLogs();
 		if (calcLogs.size() == 0) {
 			ppErrorText.setText("ERROR: No logs given to calculate");
 			return 0;
@@ -198,12 +201,24 @@ public class SceneControl implements Initializable{
 				weightSum += calcLogs.get(i).getWeight();
 			}
 			double average = (double) effortSum / (double) weightSum;
-			System.out.println(average);
+			System.out.println("Float average is: " + average);
 			if (average%1 >= 0.5) {
 				return (int) (average + 1);
 			} else {
 				return (int) average;
 			}
 		}
+	}
+	
+	public void printLogs() {
+		if (logs.size() == 0) {
+			System.out.println("There are no logs available.");
+		} else {
+			for (int i = 0; i < logs.size(); i++) {
+				System.out.println(logs.get(i).toString() + ", EV: " + logs.get(i).getEffortValue()
+						+ ", W: " + logs.get(i).getWeight());
+			}
+		}
+		System.out.println();
 	}
 }
